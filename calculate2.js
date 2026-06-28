@@ -23,5 +23,5 @@ function calculate() {
         } else {
             result_tag.innerText = "Result: " + data.Answer;
         }
-        })
+    })
 }
