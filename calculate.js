@@ -6,38 +6,45 @@ app.use(cors())
 
 const Port = 3000
 
-function Cal(a, b, op) {
-    let numberA = Number (a);
-    let numberB = Number (b);
-    if (isNaN(numberA) || isNaN(numberB))
-        return {error : "invalid numbers"};
-    let result ;
-    switch (op) {
-        case "+" : result = numberA + numberB; break;
-        case "-" : result = numberA - numberB; break;
-        case "*" : result = numberA * numberB; break;
-        case "/" : result = numberA / numberB; break;
-        default: return {error : "invalid operator"};
+app.get('/add', (req, res) => {
+    let numA = Number(req.query.a);
+    let numB = Number(req.query.b);
+    if(isNaN(numA) || isNaN(numB)) {
+        return res.json({ error: "กรอกตัวเลขให้ถูก"});
     }
-    return result;
-}
-
-app.get('/calculate', (req, res) => {
-    let a = req.query.a;
-    let b = req.query.b;
-    let op = req.query.op;
-
-    let result = Cal(a, b, op);
-    if (result.error) {
-        return res.status(404).json({
-            "error": result.error
-        })
+    let result = numA + numB;
+    res.json({ Answer: result});
+});
+app.get('/subtract', (req, res) => {
+    let numA = Number(req.query.a);
+    let numB = Number(req.query.b);
+    if(isNaN(numA) || isNaN(numB)) {
+        return res.json({ error: "กรอกตัวเลขให้ถูก"});
     }
-
-    res.json({
-        "Answer": result
-    })
-})
+    let result = numA - numB;
+    res.json({ Answer: result});
+});
+app.get('/multiply', (req, res) => {
+    let numA = Number(req.query.a);
+    let numB = Number(req.query.b);
+    if(isNaN(numA) || isNaN(numB)) {
+        return res.json({ error: "กรอกตัวเลขให้ถูก"});
+    }
+    let result = numA * numB;
+    res.json({ Answer: result});
+});
+app.get('/divide', (req, res) => {
+    let numA = Number(req.query.a);
+    let numB = Number(req.query.b);
+    if(isNaN(numA) || isNaN(numB)) {
+        return res.json({ error: "กรอกตัวเลขให้ถูก"});
+    }
+    if (numB === 0) {
+        return res.json({ error: "ห้ามหารด้วย 0"});
+    }
+    let result = numA / numB;
+    res.json({ Answer: result});
+});
 
 app.listen(3000, () => {
     console.log("Server starts successfully")
